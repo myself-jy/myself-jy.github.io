@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://myself-jy.github.io</id>
+    <title>HJY</title>
+    <updated>2022-07-27T05:09:46.234Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://myself-jy.github.io"/>
+    <link rel="self" href="https://myself-jy.github.io/atom.xml"/>
+    <subtitle>我的第一个网站</subtitle>
+    <logo>https://myself-jy.github.io/images/avatar.png</logo>
+    <icon>https://myself-jy.github.io/favicon.ico</icon>
+    <rights>All rights reserved 2022, HJY</rights>
+    <entry>
+        <title type="html"><![CDATA[我滴网站完成了！！！]]></title>
+        <id>https://myself-jy.github.io/post/wo-di-wang-zhan-wan-cheng-liao/</id>
+        <link href="https://myself-jy.github.io/post/wo-di-wang-zhan-wan-cheng-liao/">
+        </link>
+        <updated>2022-07-26T08:48:26.000Z</updated>
+        <content type="html"><![CDATA[<p>##历时一天，我完成了Gridea+github的配置✌️</p>
+]]></content>
+    </entry>
+</feed>
