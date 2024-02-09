@@ -18,8 +18,8 @@
   </title>
 
   
-    <link rel="apple-touch-icon" href="/images/favicon.png">
-    <link rel="icon" href="/images/favicon.png">
+    <link rel="apple-touch-icon" href="/images/favicon.ico">
+    <link rel="icon" href="/images/favicon.ico">
   
 
   <!-- Raleway-Font -->
@@ -131,21 +131,21 @@
 <p>开启sddm</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl enable sddm</span><br><span class="line">sudo systemctl start sddm</span><br></pre></td></tr></table></figure>
 <p>登录后先选默认设置，而后按下win+enter，就能看见终端了<br>可以看看配置</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd ~/.config/i3</span><br><span class="line">vim config</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd ~/.config/i3</span><br><span class="line">nvim config</span><br></pre></td></tr></table></figure>
 <p>新增部分配置</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#启动picom</span><br><span class="line">exec --no-startup-id picom -b</span><br><span class="line"></span><br><span class="line">#使用feh设置壁纸，注意壁纸文件必须存在且路径正确</span><br><span class="line">exec --no-startup-id feh --bg-scale ~/zocoxx/wallpaper.jpeg</span><br><span class="line"></span><br><span class="line">#去除窗口的标题栏，有利有弊，好处是窗口少了额头，坏处是去除标题栏之后部分窗口无法进行鼠标拖动</span><br><span class="line">for_window [class=&quot;^.*&quot;] border pixel 0</span><br><span class="line">#设置边框为1像素</span><br><span class="line">new_window pixel 1</span><br></pre></td></tr></table></figure>
 <p>对照注释都能看懂，先把他上面的依赖全装好，不建议你照搬下面代码，而是你自己对着每行查arch把包装好，如果有可选安装项可以自己看情况安装，像<code>python-pip</code>啥的就顺便装上就行。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S i3status　dex adobe-source-code-pro-fonts xss-lock network-manager-applet</span><br></pre></td></tr></table></figure>
 <p>把起动器换成rofi</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vim ~/.config/i3/config</span><br><span class="line">bindsym $mod+d exec --no-startup-id rofi -show drun #win+d可以启动rofi</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nvim ~/.config/i3/config</span><br><span class="line">bindsym $mod+d exec --no-startup-id rofi -show drun #win+d可以启动rofi</span><br></pre></td></tr></table></figure>
 <p>把rofi的drun打开</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cd ~/.config &amp;&amp; mkdir rofi &amp;&amp; cd rofi</span><br><span class="line">vim config.rasi </span><br><span class="line">configuration &#123;</span><br><span class="line">  show-icons:         true;</span><br><span class="line">  modi: &quot;window,drun,ssh,run&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cd ~/.config &amp;&amp; mkdir rofi &amp;&amp; cd rofi</span><br><span class="line">nvim config.rasi </span><br><span class="line">configuration &#123;</span><br><span class="line">  show-icons:         true;</span><br><span class="line">  modi: &quot;window,drun,ssh,run&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>安装基本桌面环境</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S ntfs-3g # 使系统可以识别 NTFS 格式的硬盘</span><br><span class="line">sudo pacman -S dolphin thunar #文件管理工具</span><br><span class="line">sudo pacman -S adobe-source-han-serif-cn-fonts wqy-zenhei # 安装几个开源中文字体。一般装上文泉驿就能解决大多 wine 应用中文方块的问题</span><br><span class="line">sudo pacman -S noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra # 安装谷歌开源字体及表情</span><br><span class="line">sudo pacman -S firefox # 安装火狐</span><br><span class="line">sudo pacman -S ark # 压缩软件。在 dolphin 中可用右键解压压缩包</span><br><span class="line">sudo pacman -S ristretto # 图片查看器</span><br><span class="line">sudo pacman -S vlc #视频播放器</span><br></pre></td></tr></table></figure>
 <p>安装输入法，这里推荐rime，个人基于fcitx5安装</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S fcitx5 fcitx5-qt fcitx5-gtk fcitx5-configtool fcitx5-rime</span><br></pre></td></tr></table></figure>
 <p>而后写入用户环境变量</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">vim ~/.pam_environment</span><br><span class="line">INPUT_METHOD DEFAULT=fcitx5</span><br><span class="line">GTK_IM_MODULE DEFAULT=fcitx5</span><br><span class="line">QT_IM_MODULE DEFAULT=fcitx5</span><br><span class="line">XMODIFIERS DEFAULT=\@im=fcitx5</span><br><span class="line">SDL_IM_MODULE DEFAULT=fcitx</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">nvim ~/.pam_environment</span><br><span class="line">INPUT_METHOD DEFAULT=fcitx5</span><br><span class="line">GTK_IM_MODULE DEFAULT=fcitx5</span><br><span class="line">QT_IM_MODULE DEFAULT=fcitx5</span><br><span class="line">XMODIFIERS DEFAULT=\@im=fcitx5</span><br><span class="line">SDL_IM_MODULE DEFAULT=fcitx</span><br></pre></td></tr></table></figure>
 <p>现在在i3配置中添加一行启动fcitx5</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">exec_always --no-startup-id fcitx5</span><br></pre></td></tr></table></figure>
 <p>而后打开fcitx5-configtool，把rime添加进去，作为默认输入法，重启。<br>开启aur支持</p>
@@ -159,7 +159,11 @@
 <p>然后i3wm配置文件新加一行</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">exec --no-startup-id ~/.config/polybar/launch.sh</span><br></pre></td></tr></table></figure>
 <p>重启即可看到顶栏。记得注释掉i3配置文件中的i3-bar</p>
-<h2 id="picom"><a href="#picom" class="headerlink" title="picom"></a>picom</h2><p>对于picom，如果要开启blur特效，需要启用<code>--experimental-backends</code>。具体配置可以参考picom官方文档</p>
+<h2 id="picom"><a href="#picom" class="headerlink" title="picom"></a>picom</h2><p>配置文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir ~/.config/picom/</span><br><span class="line">cp /etc/xdg/picom.conf ~/.config/picom/picom.conf</span><br><span class="line">nvim ~/.config/picom/picom.conf</span><br></pre></td></tr></table></figure>
+<p>在i3的配置文件中加入命令配置开机自启动</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">exec_always --no-startup-id picom -b</span><br></pre></td></tr></table></figure>
+<p><code>$mod+shift+r</code>重启i3即可<br>具体配置可以参考picom官方文档</p>
 
   </div>
   
