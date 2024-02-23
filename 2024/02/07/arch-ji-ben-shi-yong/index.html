@@ -106,7 +106,8 @@
     Arch基本使用
   </h1>
   <div class="content markdown-body">
-    <h1 id="基本桌面安装"><a href="#基本桌面安装" class="headerlink" title="基本桌面安装"></a>基本桌面安装</h1><p>禁用<code>reflector</code>服务，避免其自己更新镜像源</p>
+    <p>我的<a target="_blank" rel="noopener" href="https://github.com/myself-jy/dotfile">仓库</a></p>
+<h1 id="基本桌面安装"><a href="#基本桌面安装" class="headerlink" title="基本桌面安装"></a>基本桌面安装</h1><p>禁用<code>reflector</code>服务，避免其自己更新镜像源</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop reflector.service</span><br></pre></td></tr></table></figure>
 <p>测试网络环境。无线网络需手动开启网络</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">iwctl # 进入交互式命令行</span><br><span class="line">device list # 列出无线网卡设备名，比如无线网卡看到叫 wlan0</span><br><span class="line">station wlan0 scan # 扫描网络</span><br><span class="line">station wlan0 get-networks # 列出所有 wifi 网络</span><br><span class="line">station wlan0 connect wifi-name # 进行连接，注意这里无法输入中文。回车后输入密码即可</span><br><span class="line">exit # 连接成功后退出</span><br></pre></td></tr></table></figure>
@@ -123,7 +124,7 @@
 <p>安装 archlinuxcn-keyring 包以导入 GPG key</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S archlinuxcn-keyring</span><br></pre></td></tr></table></figure>
 <p>设置locale</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/locale.gen</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nvim /etc/locale.gen</span><br></pre></td></tr></table></figure>
 <p>去掉<code>zh_CN.UTF-8 UTF-8</code>前的注释符号</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo locale-gen</span><br></pre></td></tr></table></figure>
 <p>安装基本环境</p>
