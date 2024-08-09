@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="keywords" content="" />
+  <meta name="author" content="Jayon-H" />
+  <meta name="description" content="" />
+  
+  
+  <title>
+    
+      Arch基本使用 
+      
+      
+    
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/favicon.ico">
+    <link rel="icon" href="/images/favicon.ico">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Montserrat|Roboto:400,400italic,600|Roboto+Mono" rel="stylesheet">
+
+  <!-- hexo site css -->
+  
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/css/common.css">
+<link rel="stylesheet" href="/iconfont/iconfont.css">
+
+
+  
+
+  
+    
+<link rel="stylesheet" href="/css/post.css">
+
+  
+
+  <!-- jquery3.3.1 -->
+  <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+  <!-- fancybox -->
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  <script async src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js"></script>
+  
+<script src="/js/fancybox.js"></script>
+
+
+<meta name="generator" content="Hexo 7.1.1"><link rel="alternate" href="/atom.xml" title="(～o￣3￣)～JY-Blog" type="application/atom+xml">
+</head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <a href="/">JAYON</a>
+</div>
+
+
+      <p class="links">
+  
+    <a title="archives" target="" href="/archives/">
+      <i class="iconfont icon-bookmark"></i>
+    </a>
+  
+    <a title="github" target="_blank" href="https://github.com/myself-jy">
+      <i class="iconfont icon-github"></i>
+    </a>
+  
+    <a title="email" target="" href="moilto:hjytom@outlook.com">
+      <i class="iconfont icon-envelope"></i>
+    </a>
+  
+    <a title="rss" target="_blank" href="/atom.xml">
+      <i class="iconfont icon-rss"></i>
+    </a>
+  
+</p>
+
+
+      <div class="main">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+<!-- LaTex Display -->
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']]
+    }
+  };
+</script>
+
+<div class="post">
+  <h3 class="date">
+    Feb 07, 2024
+  </h3>
+  <h1>
+    Arch基本使用
+  </h1>
+  <div class="content markdown-body">
+    <p>我的<a target="_blank" rel="noopener" href="https://github.com/myself-jy/dotfile">仓库</a></p>
+<h1 id="基本桌面安装"><a href="#基本桌面安装" class="headerlink" title="基本桌面安装"></a>基本桌面安装</h1><p>禁用<code>reflector</code>服务，避免其自己更新镜像源</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop reflector.service</span><br></pre></td></tr></table></figure>
+<p>测试网络环境。无线网络需手动开启网络</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">iwctl # 进入交互式命令行</span><br><span class="line">device list # 列出无线网卡设备名，比如无线网卡看到叫 wlan0</span><br><span class="line">station wlan0 scan # 扫描网络</span><br><span class="line">station wlan0 get-networks # 列出所有 wifi 网络</span><br><span class="line">station wlan0 connect wifi-name # 进行连接，注意这里无法输入中文。回车后输入密码即可</span><br><span class="line">exit # 连接成功后退出</span><br></pre></td></tr></table></figure>
+<p>若找不到设备可能是网卡没有驱动，使用有线网络安装<br>更新镜像源</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/pacman.d/mirrorlist</span><br></pre></td></tr></table></figure>
+<p>全部删掉，替换成<a target="_blank" rel="noopener" href="https://mirrors.ustc.edu.cn/help/archlinux.html">中科大镜像源</a>，然后更新软件包索引</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pacman -Syy</span><br></pre></td></tr></table></figure>
+<p><code>archinstall</code>开始安装<br>注意：文件系统推荐传统ext4格式；自己用户默认给su权限，可以避免后续麻烦；可以最小安装，或者也可选桌面和xorg安装，我这选xorg安装；驱动的话amd&#x2F;intel选开源驱动，英伟达选专有驱动；音频推荐pipewire；网络选择networkmanager；时区选择上海。<br>重启<br>先安装Neovim<br>使用Arch Linux CN 源</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nvim /etc/pacman.conf</span><br></pre></td></tr></table></figure>
+<p>文末添加</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[archlinuxcn]</span><br><span class="line">Server = https://mirrors.ustc.edu.cn/archlinuxcn/$arch</span><br></pre></td></tr></table></figure>
+<p>更新源</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -Syyu</span><br></pre></td></tr></table></figure>
+<p>安装 archlinuxcn-keyring 包以导入 GPG key</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S archlinuxcn-keyring</span><br></pre></td></tr></table></figure>
+<p>设置locale</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nvim /etc/locale.gen</span><br></pre></td></tr></table></figure>
+<p>去掉<code>zh_CN.UTF-8 UTF-8</code>前的注释符号</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo locale-gen</span><br></pre></td></tr></table></figure>
+<p>安装基本环境</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S alacritty ＃终端</span><br><span class="line">sudo pacman -S i3-gaps　＃i3-gaps</span><br><span class="line">sudo pacman -S rofi		＃起动器</span><br><span class="line">sudo pacman -S polybar　　#顶栏</span><br><span class="line">sudo pacman -S sddm     #dm</span><br><span class="line">sudo pacman -S feh   #壁纸工具</span><br><span class="line">sudo pacman -S picom   #混成器</span><br></pre></td></tr></table></figure>
+<p>开启sddm</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl enable sddm</span><br><span class="line">sudo systemctl start sddm</span><br></pre></td></tr></table></figure>
+<p>登录后先选默认设置，而后按下win+enter，就能看见终端了<br>可以看看配置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd ~/.config/i3</span><br><span class="line">nvim config</span><br></pre></td></tr></table></figure>
+<p>新增部分配置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#启动picom</span><br><span class="line">exec --no-startup-id picom -b</span><br><span class="line"></span><br><span class="line">#使用feh设置壁纸，注意壁纸文件必须存在且路径正确</span><br><span class="line">exec --no-startup-id feh --bg-scale ~/zocoxx/wallpaper.jpeg</span><br><span class="line"></span><br><span class="line">#去除窗口的标题栏，有利有弊，好处是窗口少了额头，坏处是去除标题栏之后部分窗口无法进行鼠标拖动</span><br><span class="line">for_window [class=&quot;^.*&quot;] border pixel 0</span><br><span class="line">#设置边框为1像素</span><br><span class="line">new_window pixel 1</span><br></pre></td></tr></table></figure>
+<p>对照注释都能看懂，先把他上面的依赖全装好，不建议你照搬下面代码，而是你自己对着每行查arch把包装好，如果有可选安装项可以自己看情况安装，像<code>python-pip</code>啥的就顺便装上就行。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S i3status　dex adobe-source-code-pro-fonts xss-lock network-manager-applet</span><br></pre></td></tr></table></figure>
+<p>把起动器换成rofi</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nvim ~/.config/i3/config</span><br><span class="line">bindsym $mod+d exec --no-startup-id rofi -show drun #win+d可以启动rofi</span><br></pre></td></tr></table></figure>
+<p>把rofi的drun打开</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cd ~/.config &amp;&amp; mkdir rofi &amp;&amp; cd rofi</span><br><span class="line">nvim config.rasi </span><br><span class="line">configuration &#123;</span><br><span class="line">  show-icons:         true;</span><br><span class="line">  modi: &quot;window,drun,ssh,run&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>安装基本桌面环境</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S ntfs-3g # 使系统可以识别 NTFS 格式的硬盘</span><br><span class="line">sudo pacman -S dolphin thunar #文件管理工具</span><br><span class="line">sudo pacman -S adobe-source-han-serif-cn-fonts wqy-zenhei # 安装几个开源中文字体。一般装上文泉驿就能解决大多 wine 应用中文方块的问题</span><br><span class="line">sudo pacman -S noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra # 安装谷歌开源字体及表情</span><br><span class="line">sudo pacman -S firefox # 安装火狐</span><br><span class="line">sudo pacman -S ark # 压缩软件。在 dolphin 中可用右键解压压缩包</span><br><span class="line">sudo pacman -S ristretto # 图片查看器</span><br><span class="line">sudo pacman -S vlc #视频播放器</span><br></pre></td></tr></table></figure>
+<p>安装输入法，这里推荐rime，个人基于fcitx5安装</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S fcitx5 fcitx5-qt fcitx5-gtk fcitx5-configtool fcitx5-rime</span><br></pre></td></tr></table></figure>
+<p>而后写入用户环境变量</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">nvim ~/.pam_environment</span><br><span class="line">INPUT_METHOD DEFAULT=fcitx5</span><br><span class="line">GTK_IM_MODULE DEFAULT=fcitx5</span><br><span class="line">QT_IM_MODULE DEFAULT=fcitx5</span><br><span class="line">XMODIFIERS DEFAULT=\@im=fcitx5</span><br><span class="line">SDL_IM_MODULE DEFAULT=fcitx</span><br></pre></td></tr></table></figure>
+<p>现在在i3配置中添加一行启动fcitx5</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">exec_always --no-startup-id fcitx5</span><br></pre></td></tr></table></figure>
+<p>而后打开fcitx5-configtool，把rime添加进去，作为默认输入法，重启。<br>开启aur支持</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S paru</span><br></pre></td></tr></table></figure>
+<h1 id="进一步配置"><a href="#进一步配置" class="headerlink" title="进一步配置"></a>进一步配置</h1><h2 id="polybar设置及启动"><a href="#polybar设置及启动" class="headerlink" title="polybar设置及启动"></a>polybar设置及启动</h2><p>创建目录并设置配置文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir ~/.config/polybar</span><br><span class="line">cp /etc/polybar/config.ini ~/.config/polybar</span><br></pre></td></tr></table></figure>
+<p>要在启动i3wm之后默认启动polybar，需要有个启动脚本，文件名称、路径及内容如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># ~/.config/polybar/launch.sh</span><br><span class="line"></span><br><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line"># 终端可能已经有在运行的实例</span><br><span class="line">killall -q polybar</span><br><span class="line"></span><br><span class="line"># 等待进程被终止</span><br><span class="line">while pgrep -u $UID -x polybar &gt;/dev/null; do sleep 1; done</span><br><span class="line"></span><br><span class="line"># 运行Polybar，使用默认的配置文件路径 ~/.config/polybar/config.ini</span><br><span class="line">polybar example &amp;</span><br><span class="line"></span><br><span class="line">echo &quot;Polybar launched...&quot;</span><br></pre></td></tr></table></figure>
+<p>然后给与启动脚本可执行权限</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod +x ~/.config/polybar/launch.sh</span><br></pre></td></tr></table></figure>
+<p>然后i3wm配置文件新加一行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">exec --no-startup-id ~/.config/polybar/launch.sh</span><br></pre></td></tr></table></figure>
+<p>重启即可看到顶栏。记得注释掉i3配置文件中的i3-bar</p>
+<h2 id="picom"><a href="#picom" class="headerlink" title="picom"></a>picom</h2><p>配置文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir ~/.config/picom/</span><br><span class="line">cp /etc/xdg/picom.conf ~/.config/picom/picom.conf</span><br><span class="line">nvim ~/.config/picom/picom.conf</span><br></pre></td></tr></table></figure>
+<p>在i3的配置文件中加入命令配置开机自启动</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">exec_always --no-startup-id picom -b</span><br></pre></td></tr></table></figure>
+<p><code>$mod+shift+r</code>重启i3即可<br>具体配置可以参考picom官方文档</p>
+
+  </div>
+  
+    
+      <a id="older" class="blog-nav" href="/2023/11/25/yi-xie-bao-cang/">OLDER&nbsp;&gt;</a>
+      
+        
+            
+</div>
+        <div class="footer">
+  
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/myself-jy">Copyright © Jayon-H 2022</a>
+        
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="back-to-top hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+      
+  <div class="search-icon" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-box">
+        <div class="search-title">
+          <!-- <span class="search-icon-input">
+            <a href="javascript: void(0)">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </span> -->
+          
+            <input type="text" class="search-input" id="search-input" placeholder="搜索">
+          
+          <span class="search-close-icon" id="search-close-icon">
+            <a href="javascript: void(0)">
+              <i class="iconfont icon-close"></i>
+            </a>
+          </span>
+        </div>
+        <div class="search-result" id="search-result"></div>
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    // inputArea.onclick = function() {
+    //   getSearchFile()
+    //   this.onclick = null
+    // }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        inputArea.focus()
+        getSearchFile()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'><span></ul>";
+      // $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'><h2>" + orig_data_title + "</h2></a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<h3 class=\"search-result-abstract\">" + match_content + "...</h3>"
+                }
+                str += "<hr></li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/leedom92/hexo-theme-leedom#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+    </div>
+  </body>
+</html>
